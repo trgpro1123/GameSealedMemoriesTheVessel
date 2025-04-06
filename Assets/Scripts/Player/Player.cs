@@ -248,10 +248,7 @@ public class Player : Entity
     public void PlayerDamageHitBox(StatType _statType,int _damage, float _percentExtraDamageOfSkill, float _angle, SpriteRenderer _testSpriteRenderer,GameObject _object)
     {
         Vector3 center = sRAttackHitBox.bounds.center;
-    Vector3 size = sRAttackHitBox.size;
-    
-    // Vẽ hình chữ nhật debug
-    StartCoroutine(DrawDebugBox(center, size, _angle, 2f)); // Hiển thị trong 2 giây
+    	Vector3 size = sRAttackHitBox.size;
         
         attackHitBox.gameObject.SetActive(true);
         attackHitBox.rotation = Quaternion.Euler(0, 0, _angle);
@@ -273,59 +270,6 @@ public class Player : Entity
         }
         attackHitBox.gameObject.SetActive(false);
     }
-
-
-    private IEnumerator DrawDebugBox(Vector3 center, Vector2 size, float angle, float duration)
-{
-    float timer = 0;
-    while (timer < duration)
-    {
-        // Vẽ khung hình chữ nhật quay theo góc angle
-        Vector3 halfSize = new Vector3(size.x/2, size.y/2, 0);
-        
-        // Tính toán 4 góc của hình chữ nhật
-        Vector3 topLeft = RotatePointAroundPivot(center + new Vector3(-halfSize.x, halfSize.y, 0), center, angle);
-        Vector3 topRight = RotatePointAroundPivot(center + new Vector3(halfSize.x, halfSize.y, 0), center, angle);
-        Vector3 bottomRight = RotatePointAroundPivot(center + new Vector3(halfSize.x, -halfSize.y, 0), center, angle);
-        Vector3 bottomLeft = RotatePointAroundPivot(center + new Vector3(-halfSize.x, -halfSize.y, 0), center, angle);
-        
-        // Vẽ 4 cạnh của hình chữ nhật
-        Debug.DrawLine(topLeft, topRight, Color.red);
-        Debug.DrawLine(topRight, bottomRight, Color.red);
-        Debug.DrawLine(bottomRight, bottomLeft, Color.red);
-        Debug.DrawLine(bottomLeft, topLeft, Color.red);
-        
-        timer += Time.deltaTime;
-        yield return null;
-    }
-}
-
-private Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, float angle)
-{
-    Vector3 dir = point - pivot;
-    dir = Quaternion.Euler(0, 0, angle) * dir;
-    return pivot + dir;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public override void FreezeTimer(bool _isForzer){
